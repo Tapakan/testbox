@@ -11,6 +11,7 @@ RUN pecl install xdebug-2.5.0 \
 
 RUN apt-get update -y
 
+
 RUN apt-get install -y default-jre \
     curl \
     xvfb \
@@ -22,18 +23,21 @@ RUN apt-get purge -y g++ \
     && apt-get autoremove -y \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# install from nodesource using apt-get
-# https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server
-RUN curl -sL https://deb.nodesource.com/setup | sudo -E bash -
-RUN apt-get install -yq nodejs build-essential
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 8.11.2
 
-# fix npm - not the latest version installed by apt-get
-RUN npm install -g npm
+RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.11/install.sh | bash
 
-# install common full-stack JavaScript packages globally
-# http://blog.nodejs.org/2011/03/23/npm-1-0-global-vs-local-installation
-RUN sudo npm install -g bower
+# install node and npm
+RUN source $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
 
-# optional, check locations and packages are correct
-RUN which node; node -v; which npm; npm -v; \
-RUN npm ls -g --depth=0
+# add node and npm to path so the commands are available
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+# confirm installation
+RUN node -v
+RUN npm -v
