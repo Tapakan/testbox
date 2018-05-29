@@ -26,7 +26,7 @@ RUN apt-get purge -y g++ \
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 8.11.2
 
-RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.11/install.sh | bash
+RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 # install node and npm
 RUN source $NVM_DIR/nvm.sh \
