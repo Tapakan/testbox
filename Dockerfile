@@ -11,8 +11,6 @@ RUN pecl install xdebug-2.5.0 \
 
 RUN apt-get update -y
 
-
-
 RUN apt-get install -y default-jre \
     curl \
     xvfb \
@@ -26,16 +24,16 @@ RUN apt-get purge -y g++ \
 
 # install from nodesource using apt-get
 # https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server
-curl -sL https://deb.nodesource.com/setup | sudo bash - && \
-apt-get install -yq nodejs build-essential
+RUN curl -sL https://deb.nodesource.com/setup | sudo bash - && \
+RUN apt-get install -yq nodejs build-essential
 
 # fix npm - not the latest version installed by apt-get
-npm install -g npm
+RUN npm install -g npm
 
 # install common full-stack JavaScript packages globally
 # http://blog.nodejs.org/2011/03/23/npm-1-0-global-vs-local-installation
-sudo npm install -g bower
+RUN sudo npm install -g bower
 
 # optional, check locations and packages are correct
-which node; node -v; which npm; npm -v; \
-npm ls -g --depth=0
+RUN which node; node -v; which npm; npm -v; \
+RUN npm ls -g --depth=0
