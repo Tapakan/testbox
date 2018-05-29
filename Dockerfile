@@ -21,3 +21,12 @@ RUN apt-get install -y default-jre \
 RUN apt-get purge -y g++ \
     && apt-get autoremove -y \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs build-essential
+RUN npm install -g bower
+
+# Dubug info
+RUN node -v
+RUN npm -v
