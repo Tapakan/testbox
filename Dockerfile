@@ -13,6 +13,7 @@ RUN apt-get update -y
 
 RUN apt-get install -y default-jre \
     curl \
+    net-tools \
     xvfb \
     iceweasel \
     mysql-client \
